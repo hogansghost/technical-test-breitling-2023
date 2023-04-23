@@ -1,7 +1,0 @@
-#import "../../fragments/watch/watch.graphql"
-
-query GetWatch($id: ID) {
-  product(id: $id, channel: "default-channel") {
-    ...Watch
-  }
-}

@@ -1,6 +1,7 @@
 #import "./media/media.graphql"
 
-fragment Watch on Product {
+fragment Product on Product {
+  __typename
   id
   name
   description

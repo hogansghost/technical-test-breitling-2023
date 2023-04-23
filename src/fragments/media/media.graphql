@@ -1,4 +1,5 @@
 fragment ProductMedia on ProductMedia {
+  __typename
   id
   url
   type

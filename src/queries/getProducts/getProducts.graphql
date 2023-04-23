@@ -1,0 +1,32 @@
+#import "../../fragments/products/products.graphql"
+
+query GetProducts($after: String, $filterSearch: String, $filterType: [ID!]) {
+  products(
+    first: 12
+    after: $after
+    channel: "default-channel"
+    filter: { search: $filterSearch, productTypes: $filterType }
+    sortBy: { field: MINIMAL_PRICE, direction: ASC }
+  ) {
+    edges {
+      node {
+        id
+        name
+        description
+
+        thumbnail {
+          url
+        }
+
+        productType {
+          id
+        }
+      }
+    }
+
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+  }
+}

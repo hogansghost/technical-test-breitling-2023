@@ -1,0 +1,18 @@
+fragment ProductCountableConnection on ProductCountableConnection {
+  __typename
+  edges {
+    node {
+      id
+      name
+      description
+
+      productType {
+        id
+      }
+
+      thumbnail {
+        url
+      }
+    }
+  }
+}

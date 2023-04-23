@@ -1,11 +1,13 @@
-import { useGetWatchesQuery } from '@/queries/getWatches/getWatches.generated';
+import { ProductCard } from '@/components/common/ProductCard/ProductCard';
+import { useGetProductsQuery } from '@/queries/getProducts/getProducts.generated';
 import { kebabCase } from 'lodash';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
+import { WatchesCardGrid } from './Index.styles';
 
 export const Watches: NextPage<{}> = () => {
   const router = useRouter();
@@ -19,7 +21,7 @@ export const Watches: NextPage<{}> = () => {
     networkStatus,
     refetch,
     fetchMore,
-  } = useGetWatchesQuery({
+  } = useGetProductsQuery({
     notifyOnNetworkStatusChange: true,
     variables: {
       filterSearch: search,
@@ -27,6 +29,14 @@ export const Watches: NextPage<{}> = () => {
     },
   });
 
+  const handleLoadMoreClick = useCallback(() => {
+    console.log(data?.products?.pageInfo?.endCursor);
+    fetchMore({
+      variables: {
+        after: data?.products?.pageInfo?.endCursor,
+      },
+    });
+  }, [fetchMore, data?.products?.pageInfo?.endCursor]);
   console.log(data);
 
   return (
@@ -43,23 +53,35 @@ export const Watches: NextPage<{}> = () => {
 
         {!!data?.products?.edges?.length && (
           <div>
-            {data.products.edges.map(({ node: product }, index) => (
-              <Link
-                key={product.id}
-                href={`/watches/${encodeURIComponent(`${product.id}-${kebabCase(product.name)}`)}`}
-              >
-                {product?.thumbnail?.url && (
-                  <div style={{ position: 'relative', aspectRatio: '16 / 9' }}>
-                    <Image src={product.thumbnail.url} alt="" fill />
-                  </div>
-                )}
+            <WatchesCardGrid>
+              {data.products.edges.map(({ node: product }, index) => (
+                <ProductCard
+                  key={product.id}
+                  href={`/watches/${encodeURIComponent(`${product.id}-${kebabCase(product.name)}`)}`}
+                >
+                  {product?.thumbnail?.url && (
+                    <div style={{ position: 'relative', aspectRatio: '16 / 9' }}>
+                      <Image src={product.thumbnail.url} alt="" fill />
+                    </div>
+                  )}
 
-                <h3 style={{ wordWrap: 'break-word' }}>
-                  {product.name} ({index}) {product.productType.id}
-                </h3>
-                <p>{product.description}</p>
-              </Link>
-            ))}
+                  <h3 style={{ wordWrap: 'break-word' }}>
+                    {product.name} ({index}) {product.productType.id}
+                  </h3>
+                  <p>{product.description}</p>
+                </ProductCard>
+              ))}
+            </WatchesCardGrid>
+
+            <div style={{ padding: '32px' }}>
+              <button
+                type="button"
+                disabled={!data?.products?.pageInfo?.hasNextPage ?? true}
+                onClick={handleLoadMoreClick}
+              >
+                Load more
+              </button>
+            </div>
           </div>
         )}
 

@@ -1,6 +1,11 @@
 import client from '@/apollo/client';
-import { WatchFragment } from '@/fragments/watch/watch.generated';
-import { GetWatchDocument, GetWatchQuery, GetWatchQueryVariables } from '@/queries/getWatch/getWatch.generated';
+import { KeyFeatures } from '@/components/KeyFeaturesList/KeyFeatures';
+import { ProductFragment } from '@/fragments/product/product.generated';
+import {
+  GetProductDocument,
+  GetProductQuery,
+  GetProductQueryVariables,
+} from '@/queries/getProduct/getProduct.generated';
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
@@ -11,7 +16,7 @@ type WatchPageQuery = ParsedUrlQuery & {
   watchId?: string;
 };
 
-export const Watch: NextPage<{ watch: WatchFragment }> = ({ watch }) => {
+export const Watch: NextPage<{ watch: ProductFragment }> = ({ watch }) => {
   return (
     <>
       <Head>
@@ -23,11 +28,57 @@ export const Watch: NextPage<{ watch: WatchFragment }> = ({ watch }) => {
 
       <main>
         <h1>Watch {watch?.id}</h1>
+        <p>
+          {`I'm baby thundercats neutra williamsburg hot chicken cliche, vaporware bodega boys pitchfork. Distillery squid roof party bitters mukbang. Williamsburg mustache coloring book tilde keffiyeh narwhal hot chicken kombucha cray bruh. Ramps tumeric bodega boys, hexagon seitan street art bespoke. Affogato gluten-free distillery jean shorts, activated charcoal vinyl bespoke. Neutra brunch food truck chartreuse kickstarter. Tofu activated charcoal selfies, YOLO JOMO kogi health goth.\n\nPut a bird on it brunch raw denim intelligentsia chicharrones. Meh hexagon bushwick, mumblecore leggings shoreditch DIY 90's. Readymade same snackwave kitsch four loko synth, iceland chillwave copper mug raclette lyft ennui. Slow-carb gatekeep lo-fi DSA 90's shoreditch heirloom, scenester stumptown narwhal. 3 wolf moon adaptogen schlitz vaporware hoodie pug.`}
+        </p>
 
         {watch?.media?.map(
           (media) =>
-            media.type === 'IMAGE' && <Image key={media.id} alt="lol" src={media.url ?? ''} width={520} height={520} />
+            media.type === 'IMAGE' && (
+              <Image priority key={media.id} alt="lol" src={media.url ?? ''} width={520} height={520} />
+            )
         )}
+
+        <KeyFeatures
+          features={[
+            {
+              id: '001',
+              type: 'IP_RATING',
+              label: 'Case material',
+              value: 'Stainless steel',
+            },
+            {
+              id: '002',
+              type: 'DIAMETER',
+              label: 'Water resistance',
+              value: '10 bars i',
+            },
+            {
+              id: '003',
+              type: 'THICKNESS',
+              label: 'Diameter',
+              value: '41.0 mm',
+            },
+            {
+              id: '004',
+              type: 'WEIGHT',
+              label: 'Thickness',
+              value: '13.3 mm mm',
+            },
+            {
+              id: '005',
+              type: 'BATTERY_LIFE',
+              label: 'Product Weight (Approx.)',
+              value: '99.0 g.',
+            },
+            {
+              id: '006',
+              type: 'MATERIAL',
+              label: 'Power reserve',
+              value: 'Approx. 70 hrs',
+            },
+          ]}
+        />
 
         <Link href="/">Home</Link>
         <Link href="/watches">Watches</Link>
@@ -45,11 +96,11 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const watchId = params?.watchId as string;
+  const watchId = params?.watchId?.split('-')[0] as string;
 
   try {
-    const { data, errors } = await client.query<GetWatchQuery, GetWatchQueryVariables>({
-      query: GetWatchDocument,
+    const { data, errors } = await client.query<GetProductQuery, GetProductQueryVariables>({
+      query: GetProductDocument,
       variables: {
         id: watchId,
       },

@@ -8,7 +8,7 @@ const client = new ApolloClient({
     typePolicies: {
       Query: {
         fields: {
-          watches: {
+          products: {
             keyArgs: false,
             merge(existing = {}, incoming = {}) {
               // TODO: types here?
