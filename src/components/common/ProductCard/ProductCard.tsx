@@ -7,12 +7,43 @@ export type ProductCardProps = Omit<LinkProps, 'as'> & {
   children: React.ReactNode;
 };
 
-export const StyledLink = styled(Link)`
+export const StyledProductCardLink = styled(Link)`
   text-decoration: none;
+  display: grid;
+  gap: 32px;
+  grid-template-columns: minmax(0, 1fr);
+  padding: 16px;
+  text-align: center;
+  transition: background-color 200ms;
+
+  &:focus-within {
+    outline: 0;
+  }
+
+  &:focus-within,
+  &:hover {
+    background-color: #fafafa;
+  }
 `;
 
-export const ProductCard: React.FC<ProductCardProps> = ({ className, children, ...rest }) => (
-  <StyledLink className={className} {...rest}>
-    {children}
-  </StyledLink>
+export const StyledProductCardImage = styled.div`
+  position: relative;
+  aspect-ratio: 3 / 4;
+`;
+
+const ProductCardImage: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <StyledProductCardImage>{children}</StyledProductCardImage>
 );
+
+const ProductCardBody: React.FC<{ children: React.ReactNode }> = ({ children }) => <div>{children}</div>;
+
+export const ProductCardWrapper: React.FC<ProductCardProps> = ({ className, children, ...rest }) => (
+  <StyledProductCardLink className={className} {...rest}>
+    {children}
+  </StyledProductCardLink>
+);
+
+export const ProductCard = Object.assign(ProductCardWrapper, {
+  Image: ProductCardImage,
+  Body: ProductCardBody,
+});

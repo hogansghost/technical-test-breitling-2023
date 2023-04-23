@@ -1,5 +1,10 @@
+import { BreitlingLogo } from '@/components/logos/BreitlingLogo';
 import Link from 'next/link';
 import styled from 'styled-components';
+
+export const HomeLink = styled(Link)`
+  width: 120px;
+`;
 
 export const Navigation = styled.nav`
   display: flex;
@@ -14,46 +19,49 @@ export const List = styled.ul`
 
 export const NavigationMain = () => (
   <Navigation>
-    <Link href="/">Home</Link>
+    <HomeLink href="/">
+      <BreitlingLogo />
+    </HomeLink>
+
     <List>
       <li>
-        <Link href="/">Watches</Link>
+        <Link href="/watches">Watches</Link>
       </li>
       <li>
-        <Link href="/">Straps</Link>
+        <Link href="/watches">Straps</Link>
       </li>
       <li>
-        <Link href="/">Care</Link>
+        <Link href="/watches">Care</Link>
       </li>
       <li>
-        <Link href="/">Subscription</Link>
+        <Link href="/watches">Subscription</Link>
       </li>
       <li>
-        <Link href="/">Service</Link>
+        <Link href="/watches">Service</Link>
       </li>
       <li>
-        <Link href="/">Stores</Link>
+        <Link href="/watches">Stores</Link>
       </li>
       <li>
-        <Link href="/">About</Link>
+        <Link href="/watches">About</Link>
       </li>
     </List>
 
     <List>
       <li>
-        <Link href="/">🫥</Link>
+        <Link href="/watches">🫥</Link>
       </li>
       <li>
-        <Link href="/">🫥</Link>
+        <Link href="/watches">🫥</Link>
       </li>
       <li>
-        <Link href="/">🫥</Link>
+        <Link href="/watches">🫥</Link>
       </li>
       <li>
-        <Link href="/">🫥</Link>
+        <Link href="/watches">🫥</Link>
       </li>
       <li>
-        <Link href="/">🫥</Link>
+        <Link href="/watches">🫥</Link>
       </li>
     </List>
   </Navigation>

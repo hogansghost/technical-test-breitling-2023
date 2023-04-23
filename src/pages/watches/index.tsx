@@ -1,9 +1,9 @@
-import { ProductCard } from '@/components/common/ProductCard/ProductCard';
+import { SearchInput } from '@/components/SearchInput/SearchInput';
+import { WatchCard } from '@/components/common/products/WatchCard/WatchCard';
 import { useGetProductsQuery } from '@/queries/getProducts/getProducts.generated';
 import { kebabCase } from 'lodash';
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useCallback, useState } from 'react';
@@ -13,7 +13,7 @@ export const Watches: NextPage<{}> = () => {
   const router = useRouter();
 
   const [search, setSearch] = useState('');
-  const [filter, setFilter] = useState([]);
+  const [filter, setFilter] = useState('');
 
   const {
     data,
@@ -37,7 +37,28 @@ export const Watches: NextPage<{}> = () => {
       },
     });
   }, [fetchMore, data?.products?.pageInfo?.endCursor]);
-  console.log(data);
+
+  const handleSearchChange = (value: string) => {
+    // TODO: create a util to spread filters so we don't lose other values.
+    router.replace(
+      {
+        query: {
+          ...(value ? { search: encodeURIComponent(value) } : {}),
+          ...(filter.length ? { filter: encodeURIComponent(filter) } : {}),
+        },
+      },
+      undefined,
+      { shallow: true }
+    );
+
+    setSearch(value);
+
+    refetch({
+      after: null,
+      filterSearch: value,
+      filterType: filter,
+    });
+  };
 
   return (
     <>
@@ -49,27 +70,22 @@ export const Watches: NextPage<{}> = () => {
       </Head>
 
       <main>
-        <h1>Watches</h1>
+        <div style={{ padding: '32px', background: '#fafafa' }}>
+          <SearchInput onSearchChange={handleSearchChange} />
+        </div>
 
         {!!data?.products?.edges?.length && (
-          <div>
+          <div style={{ width: '1400px', maxWidth: '100%', margin: 'auto' }}>
             <WatchesCardGrid>
               {data.products.edges.map(({ node: product }, index) => (
-                <ProductCard
+                <WatchCard
                   key={product.id}
-                  href={`/watches/${encodeURIComponent(`${product.id}-${kebabCase(product.name)}`)}`}
-                >
-                  {product?.thumbnail?.url && (
-                    <div style={{ position: 'relative', aspectRatio: '16 / 9' }}>
-                      <Image src={product.thumbnail.url} alt="" fill />
-                    </div>
-                  )}
-
-                  <h3 style={{ wordWrap: 'break-word' }}>
-                    {product.name} ({index}) {product.productType.id}
-                  </h3>
-                  <p>{product.description}</p>
-                </ProductCard>
+                  id={product.id}
+                  url={`/watches/${encodeURIComponent(`${product.id}-${kebabCase(product.name)}`)}`}
+                  thumbnail={product?.thumbnail}
+                  name={product?.name}
+                  pricing={product?.pricing}
+                />
               ))}
             </WatchesCardGrid>
 

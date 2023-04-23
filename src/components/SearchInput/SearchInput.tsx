@@ -1,12 +1,8 @@
-import { debounce } from "lodash";
-import {
-  ChangeEvent,
-  useEffect,
-  useMemo,
-  useState
-} from "react";
+import { debounce } from 'lodash';
+import { ChangeEvent, useEffect, useMemo, useState } from 'react';
 
 type SearchInputTypes = {
+  placeholder?: string;
   defaultSearchValue?: string;
   onSearchChange: (value: string) => void;
 };
@@ -14,15 +10,13 @@ type SearchInputTypes = {
 const DEBOUNCE_DELAY = 250;
 
 export const SearchInput: React.FC<SearchInputTypes> = ({
-  defaultSearchValue = "",
+  placeholder = 'What are you looking for?',
+  defaultSearchValue = '',
   onSearchChange,
 }) => {
   const [searchValue, setSearchValue] = useState(defaultSearchValue);
 
-  const debouncedSearch = useMemo(
-    () => debounce(onSearchChange, DEBOUNCE_DELAY),
-    [onSearchChange]
-  );
+  const debouncedSearch = useMemo(() => debounce(onSearchChange, DEBOUNCE_DELAY), [onSearchChange]);
 
   const onChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const value = evt.target.value;
@@ -38,12 +32,12 @@ export const SearchInput: React.FC<SearchInputTypes> = ({
   }, [debouncedSearch]);
 
   useEffect(() => {
-    setSearchValue(defaultSearchValue)
+    setSearchValue(defaultSearchValue);
   }, [defaultSearchValue]);
 
   return (
     <div>
-      <input placeholder="Search" value={searchValue} onChange={onChange} />
+      <input placeholder={placeholder} value={searchValue} onChange={onChange} />
     </div>
   );
 };

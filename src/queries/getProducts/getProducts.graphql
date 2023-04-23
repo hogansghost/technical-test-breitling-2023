@@ -12,10 +12,22 @@ query GetProducts($after: String, $filterSearch: String, $filterType: [ID!]) {
       node {
         id
         name
-        description
+
+        pricing {
+          onSale
+          priceRange {
+            start {
+              gross {
+                amount
+                currency
+              }
+            }
+          }
+        }
 
         thumbnail {
           url
+          alt
         }
 
         productType {

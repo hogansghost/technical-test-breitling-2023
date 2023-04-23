@@ -1,5 +1,6 @@
 import client from '@/apollo/client';
-import { KeyFeatures } from '@/components/KeyFeaturesList/KeyFeatures';
+import { Text } from '@/components/common/Text/Text';
+import { KeyFeatureProps, KeyFeatures } from '@/components/product/KeyFeatures/KeyFeatures';
 import { ProductFragment } from '@/fragments/product/product.generated';
 import {
   GetProductDocument,
@@ -12,11 +13,50 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ParsedUrlQuery } from 'querystring';
 
+const features: KeyFeatureProps[] = [
+  {
+    id: '001',
+    type: 'IP_RATING',
+    label: 'Case material',
+    value: 'Stainless steel',
+  },
+  {
+    id: '002',
+    type: 'DIAMETER',
+    label: 'Water resistance',
+    value: '10 bars i',
+  },
+  {
+    id: '003',
+    type: 'THICKNESS',
+    label: 'Diameter',
+    value: '41.0 mm',
+  },
+  {
+    id: '004',
+    type: 'WEIGHT',
+    label: 'Thickness',
+    value: '13.3 mm mm',
+  },
+  {
+    id: '005',
+    type: 'BATTERY_LIFE',
+    label: 'Product Weight (Approx.)',
+    value: '99.0 g.',
+  },
+  {
+    id: '006',
+    type: 'MATERIAL',
+    label: 'Power reserve',
+    value: 'Approx. 70 hrs',
+  },
+];
+
 type WatchPageQuery = ParsedUrlQuery & {
   watchId?: string;
 };
 
-export const Watch: NextPage<{ watch: ProductFragment }> = ({ watch }) => {
+export const Watch: NextPage<{ watch: ProductFragment & { features: KeyFeatureProps[] } }> = ({ watch }) => {
   return (
     <>
       <Head>
@@ -28,57 +68,18 @@ export const Watch: NextPage<{ watch: ProductFragment }> = ({ watch }) => {
 
       <main>
         <h1>Watch {watch?.id}</h1>
-        <p>
+        <Text preserveWhitespace>
           {`I'm baby thundercats neutra williamsburg hot chicken cliche, vaporware bodega boys pitchfork. Distillery squid roof party bitters mukbang. Williamsburg mustache coloring book tilde keffiyeh narwhal hot chicken kombucha cray bruh. Ramps tumeric bodega boys, hexagon seitan street art bespoke. Affogato gluten-free distillery jean shorts, activated charcoal vinyl bespoke. Neutra brunch food truck chartreuse kickstarter. Tofu activated charcoal selfies, YOLO JOMO kogi health goth.\n\nPut a bird on it brunch raw denim intelligentsia chicharrones. Meh hexagon bushwick, mumblecore leggings shoreditch DIY 90's. Readymade same snackwave kitsch four loko synth, iceland chillwave copper mug raclette lyft ennui. Slow-carb gatekeep lo-fi DSA 90's shoreditch heirloom, scenester stumptown narwhal. 3 wolf moon adaptogen schlitz vaporware hoodie pug.`}
-        </p>
+        </Text>
 
         {watch?.media?.map(
           (media) =>
             media.type === 'IMAGE' && (
-              <Image priority key={media.id} alt="lol" src={media.url ?? ''} width={520} height={520} />
+              <Image priority key={media.id} alt="" src={media.url ?? ''} width={520} height={520} />
             )
         )}
 
-        <KeyFeatures
-          features={[
-            {
-              id: '001',
-              type: 'IP_RATING',
-              label: 'Case material',
-              value: 'Stainless steel',
-            },
-            {
-              id: '002',
-              type: 'DIAMETER',
-              label: 'Water resistance',
-              value: '10 bars i',
-            },
-            {
-              id: '003',
-              type: 'THICKNESS',
-              label: 'Diameter',
-              value: '41.0 mm',
-            },
-            {
-              id: '004',
-              type: 'WEIGHT',
-              label: 'Thickness',
-              value: '13.3 mm mm',
-            },
-            {
-              id: '005',
-              type: 'BATTERY_LIFE',
-              label: 'Product Weight (Approx.)',
-              value: '99.0 g.',
-            },
-            {
-              id: '006',
-              type: 'MATERIAL',
-              label: 'Power reserve',
-              value: 'Approx. 70 hrs',
-            },
-          ]}
-        />
+        <KeyFeatures features={watch.features} />
 
         <Link href="/">Home</Link>
         <Link href="/watches">Watches</Link>
@@ -96,7 +97,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const watchId = params?.watchId?.split('-')[0] as string;
+  // We know the ID is the first segment when split.
+  const watchId = (params?.watchId as string)?.split('-')[0];
 
   try {
     const { data, errors } = await client.query<GetProductQuery, GetProductQueryVariables>({
@@ -114,7 +116,11 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     return {
       props: {
-        watch: data.product,
+        watch: {
+          ...data.product,
+          // These would come from API.
+          features,
+        },
       },
     };
   } catch {

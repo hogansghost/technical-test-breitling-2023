@@ -6,8 +6,6 @@ import Link from 'next/link';
 const inter = Inter({ subsets: ['latin'] });
 
 const Home: NextPage = () => {
-  const lol = '';
-
   return (
     <>
       <Head>
