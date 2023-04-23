@@ -1,0 +1,5 @@
+fragment ProductMedia on ProductMedia {
+  id
+  url
+  type
+}

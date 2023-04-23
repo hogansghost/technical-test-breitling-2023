@@ -8,9 +8,10 @@ const client = new ApolloClient({
     typePolicies: {
       Query: {
         fields: {
-          products: {
+          watches: {
             keyArgs: false,
             merge(existing = {}, incoming = {}) {
+              // TODO: types here?
               // Dirty merge of responses. Will need better checks to
               // avoid duplicated data if "load earlier" implemented.
 

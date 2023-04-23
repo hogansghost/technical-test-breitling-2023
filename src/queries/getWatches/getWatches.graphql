@@ -1,0 +1,13 @@
+#import "../../fragments/watches/watches.graphql"
+
+query getWatches($after: String, $filterSearch: String, $filterType: [ID!]) {
+  products(
+    first: 10
+    after: $after
+    channel: "default-channel"
+    filter: { search: $filterSearch, productTypes: $filterType }
+    sortBy: { field: MINIMAL_PRICE, direction: ASC }
+  ) {
+    ...Products
+  }
+}

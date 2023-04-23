@@ -1,0 +1,11 @@
+#import "./media/media.graphql"
+
+fragment Watch on Product {
+  id
+  name
+  description
+
+  media {
+    ...ProductMedia
+  }
+}

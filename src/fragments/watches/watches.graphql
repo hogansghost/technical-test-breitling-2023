@@ -1,0 +1,22 @@
+#import "./watch/watch.graphql"
+
+fragment Products on ProductCountableConnection {
+  pageInfo {
+    endCursor
+    hasPreviousPage
+  }
+
+  edges {
+    node {
+      productType {
+        id
+      }
+      thumbnail {
+        alt
+        url
+      }
+
+      ...Watch
+    }
+  }
+}

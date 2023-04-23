@@ -1,8 +1,17 @@
+import client from '@/apollo/client';
+import { WatchFragment } from '@/fragments/watch/watch.generated';
+import { GetWatchDocument, GetWatchQuery, GetWatchQueryVariables } from '@/queries/getWatch/getWatch.generated';
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
+import Image from 'next/image';
 import Link from 'next/link';
+import { ParsedUrlQuery } from 'querystring';
 
-export const Watch: NextPage<{ watch: any }> = ({ watch }) => {
+type WatchPageQuery = ParsedUrlQuery & {
+  watchId?: string;
+};
+
+export const Watch: NextPage<{ watch: WatchFragment }> = ({ watch }) => {
   return (
     <>
       <Head>
@@ -13,9 +22,15 @@ export const Watch: NextPage<{ watch: any }> = ({ watch }) => {
       </Head>
 
       <main>
-        <h1>Watch {watch?.watchId}</h1>
+        <h1>Watch {watch?.id}</h1>
+
+        {watch?.media?.map(
+          (media) =>
+            media.type === 'IMAGE' && <Image key={media.id} alt="lol" src={media.url ?? ''} width={520} height={520} />
+        )}
+
         <Link href="/">Home</Link>
-        <Link href="watches">Watches</Link>
+        <Link href="/watches">Watches</Link>
       </main>
     </>
   );
@@ -30,15 +45,32 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const watchId = params?.watchId;
+  const watchId = params?.watchId as string;
 
-  return {
-    props: {
-      watch: {
-        watchId,
+  try {
+    const { data, errors } = await client.query<GetWatchQuery, GetWatchQueryVariables>({
+      query: GetWatchDocument,
+      variables: {
+        id: watchId,
       },
-    },
-  };
+    });
+
+    if (!data || errors) {
+      return {
+        notFound: true,
+      };
+    }
+
+    return {
+      props: {
+        watch: data.product,
+      },
+    };
+  } catch {
+    return {
+      notFound: true,
+    };
+  }
 };
 
 export default Watch;

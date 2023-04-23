@@ -1,8 +1,34 @@
+import { useGetWatchesQuery } from '@/queries/getWatches/getWatches.generated';
+import { kebabCase } from 'lodash';
 import type { NextPage } from 'next';
 import Head from 'next/head';
+import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
 
 export const Watches: NextPage<{}> = () => {
+  const router = useRouter();
+
+  const [search, setSearch] = useState('');
+  const [filter, setFilter] = useState([]);
+
+  const {
+    data,
+    loading: dataLoading,
+    networkStatus,
+    refetch,
+    fetchMore,
+  } = useGetWatchesQuery({
+    notifyOnNetworkStatusChange: true,
+    variables: {
+      filterSearch: search,
+      filterType: filter,
+    },
+  });
+
+  console.log(data);
+
   return (
     <>
       <Head>
@@ -14,8 +40,31 @@ export const Watches: NextPage<{}> = () => {
 
       <main>
         <h1>Watches</h1>
+
+        {!!data?.products?.edges?.length && (
+          <div>
+            {data.products.edges.map(({ node: product }, index) => (
+              <Link
+                key={product.id}
+                href={`/watches/${encodeURIComponent(`${product.id}-${kebabCase(product.name)}`)}`}
+              >
+                {product?.thumbnail?.url && (
+                  <div style={{ position: 'relative', aspectRatio: '16 / 9' }}>
+                    <Image src={product.thumbnail.url} alt="" fill />
+                  </div>
+                )}
+
+                <h3 style={{ wordWrap: 'break-word' }}>
+                  {product.name} ({index}) {product.productType.id}
+                </h3>
+                <p>{product.description}</p>
+              </Link>
+            ))}
+          </div>
+        )}
+
         <Link href="/">Home</Link>
-        <Link href="watches/test-id">Watch</Link>
+        <Link href="watches/UHJvZHVjdDoxNTQ=">Watch</Link>
       </main>
     </>
   );
