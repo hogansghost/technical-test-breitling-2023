@@ -10,7 +10,7 @@ export type GetProductsQueryVariables = Types.Exact<{
 }>;
 
 
-export type GetProductsQuery = { __typename?: 'Query', products?: { __typename?: 'ProductCountableConnection', edges: Array<{ __typename?: 'ProductCountableEdge', node: { __typename?: 'Product', id: string, name: string, pricing?: { __typename?: 'ProductPricingInfo', onSale?: boolean | null, priceRange?: { __typename?: 'TaxedMoneyRange', start?: { __typename?: 'TaxedMoney', gross: { __typename?: 'Money', amount: number, currency: string } } | null } | null } | null, thumbnail?: { __typename?: 'Image', url: string, alt?: string | null } | null, productType: { __typename?: 'ProductType', id: string } } }>, pageInfo: { __typename?: 'PageInfo', endCursor?: string | null, hasNextPage: boolean } } | null };
+export type GetProductsQuery = { __typename?: 'Query', products?: { __typename?: 'ProductCountableConnection', edges: Array<{ __typename?: 'ProductCountableEdge', node: { __typename?: 'Product', id: string, name: string, slug: string, pricing?: { __typename?: 'ProductPricingInfo', onSale?: boolean | null, priceRange?: { __typename?: 'TaxedMoneyRange', start?: { __typename?: 'TaxedMoney', gross: { __typename?: 'Money', amount: number, currency: string } } | null } | null } | null, thumbnail?: { __typename?: 'Image', url: string, alt?: string | null } | null, productType: { __typename?: 'ProductType', id: string } } }>, pageInfo: { __typename?: 'PageInfo', endCursor?: string | null, hasNextPage: boolean } } | null };
 
 
 export const GetProductsDocument = gql`
@@ -26,6 +26,7 @@ export const GetProductsDocument = gql`
       node {
         id
         name
+        slug
         pricing {
           onSale
           priceRange {

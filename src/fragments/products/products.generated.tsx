@@ -1,21 +1,31 @@
 import * as Types from '../../types';
 
 import { gql } from '@apollo/client';
-export type ProductCountableConnectionFragment = { __typename: 'ProductCountableConnection', edges: Array<{ __typename?: 'ProductCountableEdge', node: { __typename?: 'Product', id: string, name: string, description?: any | null, productType: { __typename?: 'ProductType', id: string }, thumbnail?: { __typename?: 'Image', url: string } | null } }> };
+export type ProductsFragmentFragment = { __typename?: 'ProductCountableConnection', edges: Array<{ __typename?: 'ProductCountableEdge', node: { __typename?: 'Product', id: string, name: string, pricing?: { __typename?: 'ProductPricingInfo', onSale?: boolean | null, priceRange?: { __typename?: 'TaxedMoneyRange', start?: { __typename?: 'TaxedMoney', gross: { __typename?: 'Money', amount: number, currency: string } } | null } | null } | null, thumbnail?: { __typename?: 'Image', url: string, alt?: string | null } | null, productType: { __typename?: 'ProductType', id: string } } }> };
 
-export const ProductCountableConnectionFragmentDoc = gql`
-    fragment ProductCountableConnection on ProductCountableConnection {
-  __typename
+export const ProductsFragmentFragmentDoc = gql`
+    fragment ProductsFragment on ProductCountableConnection {
   edges {
     node {
       id
       name
-      description
-      productType {
-        id
+      pricing {
+        onSale
+        priceRange {
+          start {
+            gross {
+              amount
+              currency
+            }
+          }
+        }
       }
       thumbnail {
         url
+        alt
+      }
+      productType {
+        id
       }
     }
   }

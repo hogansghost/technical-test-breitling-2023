@@ -12,6 +12,7 @@ query GetProducts($after: String, $filterSearch: String, $filterType: [ID!]) {
       node {
         id
         name
+        slug
 
         pricing {
           onSale

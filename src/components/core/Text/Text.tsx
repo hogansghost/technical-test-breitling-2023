@@ -1,7 +1,7 @@
 import { forwardRef } from 'react';
 
-import { StyledText } from './styles';
-import { TextProps } from './types';
+import { StyledText } from './Text.styles';
+import type { TextProps } from './Text.types';
 
 // Export styled component for nested styling.
 // ts-unused-exports:disable-next-line

@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-import { TextSizes, TextWeights } from './types';
+import { TextSizes, TextWeights } from './Text.types';
 
 export const StyledText = styled.p<{
   $preserveWhitespace: boolean;

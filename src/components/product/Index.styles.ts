@@ -1,5 +1,5 @@
-import { CardGrid } from '@/components/common/CardGrid/CardGrid';
-import { StyledProductCardLink } from '@/components/common/ProductCard/ProductCard';
+import { ProductCardLink } from '@/components/common/ProductCard/ProductCard.styles';
+import { CardGrid } from '@/components/layout/CardGrid/CardGrid';
 import styled from 'styled-components';
 
 export const WatchesCardGrid = styled(CardGrid)`
@@ -7,7 +7,7 @@ export const WatchesCardGrid = styled(CardGrid)`
     gap: 64px;
     grid-template-columns: repeat(4, minmax(100px, 1fr));
 
-    ${StyledProductCardLink} {
+    ${ProductCardLink} {
       position: relative;
 
       &:not(:nth-of-type(4n + 4)):not(:last-of-type) {

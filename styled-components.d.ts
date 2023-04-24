@@ -1,5 +1,8 @@
-/// <reference types="next" />
-/// <reference types="next/image-types/global" />
+import { theme } from '@/styles/theme';
 
-// NOTE: This file should not be edited
-// see https://nextjs.org/docs/basic-features/typescript for more information.
+type Theme = typeof theme;
+
+declare module 'styled-components' {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface DefaultTheme extends Theme {}
+}

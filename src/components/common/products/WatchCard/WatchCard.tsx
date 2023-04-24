@@ -22,12 +22,12 @@ export const WatchCard: React.FC<ProductCardProps> = ({ url, thumbnail, id, name
 
       <Styled.WatchNameText>{name}</Styled.WatchNameText>
 
-      <p style={{ wordWrap: 'break-word' }}>
+      <Styled.WatchPriceText>
         {new Intl.NumberFormat('en-GB', {
           style: 'currency',
           currency: pricing?.priceRange?.start?.gross?.currency ?? 'USD',
         }).format(pricing?.priceRange?.start?.gross?.amount ?? 0)}
-      </p>
+      </Styled.WatchPriceText>
     </ProductCard.Body>
   </ProductCard>
 );

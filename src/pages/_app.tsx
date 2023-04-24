@@ -1,5 +1,5 @@
-import { Layout } from '@/components/common/Layout/Layout';
-import { LoadingOverlay } from '@/components/common/LoadingOverlay/LoadingOverlay';
+import { LoadingOverlay } from '@/components/core/LoadingOverlay/LoadingOverlay';
+import { AppLayout } from '@/components/layout/AppLayout/AppLayout';
 import { usePreserveScroll } from '@/hooks/usePreserveScroll';
 import { GlobalStyles } from '@/styles/global';
 import { ApolloProvider } from '@apollo/client';
@@ -15,11 +15,11 @@ export default function App({ Component, pageProps }: AppProps) {
     <ApolloProvider client={client}>
       <ThemeProvider theme={theme}>
         <LoadingOverlay isLoading={isTransitioning}>
-          <Layout>
+          <AppLayout>
             <GlobalStyles />
 
             <Component {...pageProps} />
-          </Layout>
+          </AppLayout>
         </LoadingOverlay>
       </ThemeProvider>
     </ApolloProvider>

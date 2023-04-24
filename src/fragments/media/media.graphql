@@ -1,4 +1,4 @@
-fragment ProductMedia on ProductMedia {
+fragment ProductMediaFragment on ProductMedia {
   __typename
   id
   url

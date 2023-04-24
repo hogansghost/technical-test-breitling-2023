@@ -1,7 +1,7 @@
 import * as Types from '../../types';
 
 import { gql } from '@apollo/client';
-import { ProductFragmentDoc } from '../../fragments/product/product.generated';
+import { ProductFragmentFragmentDoc } from '../../fragments/product/product.generated';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
 export type GetProductQueryVariables = Types.Exact<{
@@ -15,10 +15,10 @@ export type GetProductQuery = { __typename?: 'Query', product?: { __typename: 'P
 export const GetProductDocument = gql`
     query GetProduct($id: ID) {
   product(id: $id, channel: "default-channel") {
-    ...Product
+    ...ProductFragment
   }
 }
-    ${ProductFragmentDoc}`;
+    ${ProductFragmentFragmentDoc}`;
 
 /**
  * __useGetProductQuery__

@@ -1,4 +1,4 @@
-import { font } from '@/styles/theme';
+import type { font } from '@/styles/theme';
 
 export type TextSizes = keyof typeof font.size.body;
 

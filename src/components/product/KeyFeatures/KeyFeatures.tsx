@@ -4,14 +4,16 @@ import * as Styled from './KeyFeatures.styles';
 // TODO: These would come from the API types.
 export type KeyFeatureType = 'MATERIAL' | 'IP_RATING' | 'DIAMETER' | 'THICKNESS' | 'WEIGHT' | 'BATTERY_LIFE';
 
-export type KeyFeatureProps = {
+export interface KeyFeatureProps {
   type: KeyFeatureType;
   id: string;
   label: string;
   value: string;
-};
+}
 
-export type KeyFeaturesProps = { features: KeyFeatureProps[] };
+export interface KeyFeaturesProps {
+  features: KeyFeatureProps[];
+}
 
 export const KeyFeatures: React.FC<KeyFeaturesProps> = ({ features }) => (
   <Styled.KeyFeatures>

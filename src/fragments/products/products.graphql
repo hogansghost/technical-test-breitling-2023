@@ -1,17 +1,28 @@
-fragment ProductCountableConnection on ProductCountableConnection {
-  __typename
+fragment ProductsFragment on ProductCountableConnection {
   edges {
     node {
       id
       name
-      description
 
-      productType {
-        id
+      pricing {
+        onSale
+        priceRange {
+          start {
+            gross {
+              amount
+              currency
+            }
+          }
+        }
       }
 
       thumbnail {
         url
+        alt
+      }
+
+      productType {
+        id
       }
     }
   }

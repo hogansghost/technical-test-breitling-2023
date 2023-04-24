@@ -1,12 +1,12 @@
 #import "./media/media.graphql"
 
-fragment Product on Product {
+fragment ProductFragment on Product {
   __typename
   id
   name
   description
 
   media {
-    ...ProductMedia
+    ...ProductMediaFragment
   }
 }
