@@ -5,7 +5,7 @@ const nextConfig = {
     styledComponents: true,
   },
   images: {
-    domains: ['demo.saleor.io'],
+    domains: ['prod.demo.saleor.cloud', 'demo.saleor.io'],
   },
 };
 
