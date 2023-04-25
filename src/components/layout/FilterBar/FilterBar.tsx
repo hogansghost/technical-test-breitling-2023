@@ -7,12 +7,13 @@ export const FilterBarWrapper: React.FC<FilterBarProps> = ({ children, className
   </Styled.FilterBar>
 );
 
-export const FilterBarSection: React.FC<FilterBarProps> = ({ className, children, ...rest }) => (
-  <Styled.FilterBarSection className={className} {...rest}>
+export const FilterBarSection: React.FC<FilterBarProps> = ({ className, children, canExpand, ...rest }) => (
+  <Styled.FilterBarSection $canExpand={canExpand} className={className} {...rest}>
     {children}
   </Styled.FilterBarSection>
 );
 
 export const FilterBar = Object.assign(FilterBarWrapper, {
-  Section: FilterBarSection,
+  PrimaryActions: (props: FilterBarProps) => <FilterBarSection canExpand {...props} />,
+  SecondaryActions: FilterBarSection,
 });

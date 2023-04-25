@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 
 export const FilterBar = styled.div`
   ${({ theme }) => css`
-    background-color: #fafafa;
+    background-color: ${theme.colors.interface.controls.background};
   `}
 `;
 
@@ -19,10 +19,14 @@ export const FilterBarBody = styled.div`
   `}
 `;
 
-export const FilterBarSection = styled.div`
-  ${({ theme }) => css`
-    display: grid;
-    gap: ${theme.spacing(2)};
-    grid-template-columns: minmax(100px, 1fr);
+export const FilterBarSection = styled.div<{ $canExpand?: boolean }>`
+  ${({ $canExpand }) => css`
+    flex: 0 0 auto;
+
+    ${$canExpand &&
+    css`
+      flex: 1 1 auto;
+      min-width: 0;
+    `}
   `}
 `;

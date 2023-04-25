@@ -7,8 +7,8 @@ export const PageLayoutWrapper: React.FC<PageLayoutProps> = ({ children, classNa
   </Styled.PageLayout>
 );
 
-export const PageLayoutSection: React.FC<PageLayoutProps> = ({ className, children, ...rest }) => (
-  <Styled.PageLayoutSection className={className} {...rest}>
+export const PageLayoutSection: React.FC<PageLayoutProps> = ({ className, children, fullWidth, ...rest }) => (
+  <Styled.PageLayoutSection $fullWidth={fullWidth} className={className} {...rest}>
     {children}
   </Styled.PageLayoutSection>
 );

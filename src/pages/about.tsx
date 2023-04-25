@@ -1,17 +1,14 @@
-import { HeroCarousel } from '@/components/common/HeroCarousel/HeroCarousel';
+import { Text } from '@/components/core/Text/Text';
 import { PageLayout } from '@/components/layout/PageLayout/PageLayout';
 import type { NextPage } from 'next';
-import { Inter } from 'next/font/google';
 import Head from 'next/head';
 
-const inter = Inter({ subsets: ['latin'] });
-
-const Home: NextPage = () => {
+const About: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Breitling | Swiss Luxury Watches</title>
-        <meta name="Breitling | Swiss Luxury Watches" />
+        <title>Breitling | About</title>
+        <meta name="Breitling | About" />
         <meta
           name="description"
           content="Breitling - the inventor of the modern chronograph. Swiss craftsmanship since 1884. Explore Breitling's range of watches designed for your air, land and sea pursuits. The New Super Chronomat. Endurance Pro IRONMAN®. The New Premier Heritage."
@@ -21,7 +18,7 @@ const Home: NextPage = () => {
       <main>
         <PageLayout>
           <PageLayout.Section>
-            <HeroCarousel />
+            <Text>An about page</Text>
           </PageLayout.Section>
         </PageLayout>
       </main>
@@ -29,4 +26,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default About;

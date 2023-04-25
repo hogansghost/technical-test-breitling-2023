@@ -2,7 +2,7 @@ import * as Types from '../../types';
 
 import { gql } from '@apollo/client';
 import { ProductMediaFragmentFragmentDoc } from '../media/media.generated';
-export type ProductFragmentFragment = { __typename: 'Product', id: string, name: string, description?: any | null, media?: Array<{ __typename: 'ProductMedia', id: string, url: string, type: Types.ProductMediaType }> | null };
+export type ProductFragmentFragment = { __typename: 'Product', id: string, name: string, description?: any | null, seoTitle?: string | null, seoDescription?: string | null, media?: Array<{ __typename: 'ProductMedia', id: string, url: string, type: Types.ProductMediaType }> | null };
 
 export const ProductFragmentFragmentDoc = gql`
     fragment ProductFragment on Product {
@@ -10,6 +10,8 @@ export const ProductFragmentFragmentDoc = gql`
   id
   name
   description
+  seoTitle
+  seoDescription
   media {
     ...ProductMediaFragment
   }

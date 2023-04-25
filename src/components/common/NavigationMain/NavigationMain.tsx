@@ -28,6 +28,7 @@ export const Navigation = styled.nav`
 export const NavigationBody = styled.div`
   ${({ theme }) => css`
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     margin: auto;
     width: ${theme.dimensions.content.large};
@@ -42,6 +43,19 @@ export const List = styled.ul`
   list-style: none;
 `;
 
+export const PageListWrapper = styled.div`
+  flex: 1 1 auto;
+  @media (max-width: 768px) {
+    order: 3;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+`;
+
+export const PageList = styled(List)`
+  gap: 32px;
+`;
+
 export const NavigationMain = () => (
   <Navigation>
     <NavigationBody>
@@ -49,29 +63,31 @@ export const NavigationMain = () => (
         <BreitlingLogo />
       </HomeLink>
 
-      <List>
-        <li>
-          <PageLink href="/watches">Watches</PageLink>
-        </li>
-        <li>
-          <PageLink href="/">Straps</PageLink>
-        </li>
-        <li>
-          <PageLink href="/">Care</PageLink>
-        </li>
-        <li>
-          <PageLink href="/">Subscription</PageLink>
-        </li>
-        <li>
-          <PageLink href="/">Service</PageLink>
-        </li>
-        <li>
-          <PageLink href="/">Stores</PageLink>
-        </li>
-        <li>
-          <PageLink href="/">About</PageLink>
-        </li>
-      </List>
+      <PageListWrapper>
+        <PageList>
+          <li>
+            <PageLink href="/watches">Watches</PageLink>
+          </li>
+          <li>
+            <PageLink href="/about">Straps</PageLink>
+          </li>
+          <li>
+            <PageLink href="/about">Care</PageLink>
+          </li>
+          <li>
+            <PageLink href="/about">Subscription</PageLink>
+          </li>
+          <li>
+            <PageLink href="/about">Service</PageLink>
+          </li>
+          <li>
+            <PageLink href="/about">Stores</PageLink>
+          </li>
+          <li>
+            <PageLink href="/about">About</PageLink>
+          </li>
+        </PageList>
+      </PageListWrapper>
 
       <List>
         <li>

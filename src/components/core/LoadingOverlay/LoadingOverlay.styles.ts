@@ -4,6 +4,7 @@ export const LoadingOverlay = styled.div`
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   grid-auto-rows: auto;
+  min-height: 100px;
 `;
 
 export const LoadingOverlaySpinner = styled.div`

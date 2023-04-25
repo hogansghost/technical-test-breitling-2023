@@ -5,6 +5,8 @@ fragment ProductFragment on Product {
   id
   name
   description
+  seoTitle
+  seoDescription
 
   media {
     ...ProductMediaFragment

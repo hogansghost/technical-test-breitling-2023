@@ -1,3 +1,6 @@
+/**
+ * @deprecated do not use - just to display all icons at once
+ */
 export const AllIcons = () => (
   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, 40px)', gap: '10px' }}>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">

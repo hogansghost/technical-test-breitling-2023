@@ -4,8 +4,8 @@ const spacing = (value: number, multiplier = 8): string => `${Math.round(value *
 export const dimensions = {
   content: {
     small: '1000px',
-    medium: '1200px',
-    large: '1400px',
+    medium: '1400px',
+    large: '1920px',
   },
 };
 
@@ -31,8 +31,17 @@ export const font = {
   },
 };
 
+const colors = {
+  interface: {
+    controls: {
+      background: '#fafafa',
+    },
+  },
+};
+
 export const theme = {
-  spacing,
-  font,
+  colors,
   dimensions,
+  font,
+  spacing,
 };

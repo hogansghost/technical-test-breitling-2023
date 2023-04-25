@@ -1,7 +1,6 @@
-import Link from 'next/link';
 import styled from 'styled-components';
 
-export const LinkIcon = styled(Link)`
+export const ButtonIcon = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -10,16 +9,16 @@ export const LinkIcon = styled(Link)`
   height: 28px;
   text-decoration: none;
   color: inherit;
-  transition: color 200ms;
+  transition: color 200ms, background-color 200ms;
+  background: none;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
 
   &:focus,
   &:active,
   &:hover {
     color: #ffc62d;
-  }
-
-  svg {
-    height: 100%;
-    width: 100%;
+    background-color: rgba(255, 255, 255, 0.1);
   }
 `;

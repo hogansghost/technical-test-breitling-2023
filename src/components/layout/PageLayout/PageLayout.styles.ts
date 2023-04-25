@@ -8,11 +8,20 @@ export const PageLayout = styled.div`
     margin: auto;
 
     @media (min-width: 768px) {
-      grid-template-columns: minmax(32px, 1fr) minmax(100px, 1400px) minmax(32px, 1fr);
+      grid-template-columns: minmax(32px, 1fr) minmax(100px, ${theme.dimensions.content.large}) minmax(32px, 1fr);
     }
   `}
 `;
 
-export const PageLayoutSection = styled.div`
-  grid-column: 2 / 3;
+export const PageLayoutSection = styled.div<{ $fullWidth?: boolean }>`
+  ${({ $fullWidth }) => css`
+    @media (min-width: 768px) {
+      grid-column: 2 / 3;
+
+      ${$fullWidth &&
+      css`
+        grid-column: 1 / -1;
+      `}
+    }
+  `}
 `;
