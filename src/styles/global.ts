@@ -65,4 +65,20 @@ export const GlobalStyles = createGlobalStyle`
   html {
     font-family: 'Open Sans', sans-serif;
   }
+
+
+  /*
+  * CSS variables
+  */
+  :root {
+    --breitling-branding-yellow: #ffc62d;
+  }
+
+
+  /*
+  * Hacky temp junk
+  */
+  main {
+    min-height: 82vh;
+  }
 `;

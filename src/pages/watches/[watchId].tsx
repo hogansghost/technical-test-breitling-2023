@@ -1,16 +1,18 @@
 import client from '@/apollo/client';
+import { Footer } from '@/components/common/Footer/Footer';
+import { Button } from '@/components/core/Button/Button.styles';
 import { Text } from '@/components/core/Text/Text';
 import { PageLayout } from '@/components/layout/PageLayout/PageLayout';
 import { HeroDetails } from '@/components/product/HeroDetails/HeroDetails';
 import type { KeyFeatureProps } from '@/components/product/KeyFeatures/KeyFeatures';
 import { KeyFeatures } from '@/components/product/KeyFeatures/KeyFeatures';
+import { ProductHeroArea } from '@/components/product/ProductHeroArea/ProductHeroArea';
 import type { ProductFragmentFragment } from '@/fragments/product/product.generated';
 import type { GetProductQuery, GetProductQueryVariables } from '@/queries/getProduct/getProduct.generated';
 import { GetProductDocument } from '@/queries/getProduct/getProduct.generated';
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
-import Link from 'next/link';
 
 const features: KeyFeatureProps[] = [
   {
@@ -51,80 +53,102 @@ const features: KeyFeatureProps[] = [
   },
 ];
 
+// TODO: abstract all this optional chaining into hooks to make this component more readable.
+// e.g.
+// useWatchDetails({ watch }) => ({ heroImage: watch?.media?.[0]?.type === 'IMAGE' ?? null, name: watch?.name })
 export const Watch: NextPage<{ watch: ProductFragmentFragment & { features: KeyFeatureProps[] } }> = ({ watch }) => {
+  const handleAddToBagClick = () => {
+    alert('This feature is not yet implemented');
+  };
+
   return (
-    <PageLayout>
+    <>
       <Head>
         <title>Breitling | {watch.name}</title>
         <meta name="title" content={watch?.seoTitle ?? watch.name} />
         <meta name="description" content={watch.seoDescription ?? 'A mock short description'} />
       </Head>
 
-      <PageLayout.Section>
-        <main>
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
-              gap: '32px',
-              paddingBlock: '100px',
-            }}
-          >
-            <HeroDetails />
+      <main>
+        <PageLayout>
+          <PageLayout.Section>
+            <ProductHeroArea>
+              <HeroDetails />
 
-            <div style={{ paddingInline: '64px' }}>
-              <h1>Watch {watch?.id}</h1>
-
-              {watch?.media?.[0]?.type === 'IMAGE' && (
-                <div
-                  key={watch?.media?.[0].id}
-                  style={{
-                    position: 'relative',
-                    aspectRatio: '1 / 1',
-                  }}
-                >
-                  <Image priority key={watch?.media?.[0].id} alt="" src={watch?.media?.[0].url ?? ''} fill sizes="" />
-                </div>
-              )}
-
-              <Text preserveWhitespace>
-                {/* eslint-disable-next-line @typescript-eslint/quotes */}
-                {`I'm baby thundercats neutra williamsburg hot chicken cliche, vaporware bodega boys pitchfork. Distillery squid roof party bitters mukbang. Williamsburg mustache coloring book tilde keffiyeh narwhal hot chicken kombucha cray bruh. Ramps tumeric bodega boys, hexagon seitan street art bespoke. Affogato gluten-free distillery jean shorts, activated charcoal vinyl bespoke. Neutra brunch food truck chartreuse kickstarter. Tofu activated charcoal selfies, YOLO JOMO kogi health goth.\n\nPut a bird on it brunch raw denim intelligentsia chicharrones. Meh hexagon bushwick, mumblecore leggings shoreditch DIY 90's. Readymade same snackwave kitsch four loko synth, iceland chillwave copper mug raclette lyft ennui. Slow-carb gatekeep lo-fi DSA 90's shoreditch heirloom, scenester stumptown narwhal. 3 wolf moon adaptogen schlitz vaporware hoodie pug.`}
-              </Text>
-            </div>
-          </div>
-
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
-              gap: '32px',
-              paddingBlock: '50px',
-            }}
-          >
-            {watch?.media?.map(
-              (media) =>
-                media.type === 'IMAGE' && (
+              {/* TODO: Component */}
+              <div style={{ width: '500px', maxWidth: '100%', marginInline: 'auto', textAlign: 'center' }}>
+                {watch?.media?.[0]?.type === 'IMAGE' && (
                   <div
-                    key={media.id}
+                    key={watch?.media?.[0].id}
                     style={{
                       position: 'relative',
                       aspectRatio: '1 / 1',
                     }}
                   >
-                    <Image priority key={media.id} alt="" src={media.url ?? ''} fill sizes="" />
+                    <Image priority key={watch?.media?.[0].id} alt="" src={watch?.media?.[0].url ?? ''} fill sizes="" />
                   </div>
-                )
-            )}
-          </div>
+                )}
 
-          <KeyFeatures features={watch.features} />
+                <div
+                  style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr)', gap: '16px', paddingBlock: '32px' }}
+                >
+                  <Text size="small">{watch?.id}</Text>
+                  <Text size="large" weight="semiBold">
+                    {watch?.name}
+                  </Text>
+                  <Text size="small" weight="semiBold">
+                    {/* TODO: Make price component */}
+                    {new Intl.NumberFormat('en-GB', {
+                      style: 'currency',
+                      currency: watch?.pricing?.priceRange?.start?.gross?.currency ?? 'USD',
+                    }).format(watch?.pricing?.priceRange?.start?.gross?.amount ?? 0)}
+                  </Text>
 
-          <Link href="/">Home</Link>
-          <Link href="/watches">Watches</Link>
-        </main>
-      </PageLayout.Section>
-    </PageLayout>
+                  <div style={{ display: 'flex', justifyContent: 'center', paddingBlockStart: '32px' }}>
+                    <Button onClick={handleAddToBagClick}>Add to Bag</Button>
+                  </div>
+                </div>
+              </div>
+            </ProductHeroArea>
+          </PageLayout.Section>
+
+          <PageLayout.Divider />
+
+          <PageLayout.Section>
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(min(450px, 100%), 1fr))',
+                gap: '32px',
+              }}
+            >
+              {watch?.media?.map(
+                (media) =>
+                  media.type === 'IMAGE' && (
+                    <div
+                      key={media.id}
+                      style={{
+                        position: 'relative',
+                        aspectRatio: '1 / 1',
+                      }}
+                    >
+                      <Image priority key={media.id} alt="" src={media.url ?? ''} fill sizes="" />
+                    </div>
+                  )
+              )}
+            </div>
+          </PageLayout.Section>
+
+          <PageLayout.Divider />
+
+          <PageLayout.Section>
+            <KeyFeatures features={watch.features} />
+          </PageLayout.Section>
+        </PageLayout>
+      </main>
+
+      <Footer />
+    </>
   );
 };
 

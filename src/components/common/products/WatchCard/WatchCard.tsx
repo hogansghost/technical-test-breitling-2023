@@ -23,6 +23,7 @@ export const WatchCard: React.FC<ProductCardProps> = ({ url, thumbnail, id, name
       <Styled.WatchNameText>{name}</Styled.WatchNameText>
 
       <Styled.WatchPriceText>
+        {/* TODO: Make price component */}
         {new Intl.NumberFormat('en-GB', {
           style: 'currency',
           currency: pricing?.priceRange?.start?.gross?.currency ?? 'USD',

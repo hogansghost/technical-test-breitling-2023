@@ -9,7 +9,7 @@ export type GetProductQueryVariables = Types.Exact<{
 }>;
 
 
-export type GetProductQuery = { __typename?: 'Query', product?: { __typename: 'Product', id: string, name: string, description?: any | null, seoTitle?: string | null, seoDescription?: string | null, media?: Array<{ __typename: 'ProductMedia', id: string, url: string, type: Types.ProductMediaType }> | null } | null };
+export type GetProductQuery = { __typename?: 'Query', product?: { __typename: 'Product', id: string, name: string, description?: any | null, seoTitle?: string | null, seoDescription?: string | null, pricing?: { __typename?: 'ProductPricingInfo', onSale?: boolean | null, priceRange?: { __typename?: 'TaxedMoneyRange', start?: { __typename?: 'TaxedMoney', gross: { __typename?: 'Money', amount: number, currency: string } } | null } | null } | null, media?: Array<{ __typename: 'ProductMedia', id: string, url: string, type: Types.ProductMediaType }> | null } | null };
 
 
 export const GetProductDocument = gql`

@@ -1,3 +1,4 @@
+import { Footer } from '@/components/common/Footer/Footer';
 import { Text } from '@/components/core/Text/Text';
 import { PageLayout } from '@/components/layout/PageLayout/PageLayout';
 import type { NextPage } from 'next';
@@ -22,6 +23,8 @@ const About: NextPage = () => {
           </PageLayout.Section>
         </PageLayout>
       </main>
+
+      <Footer />
     </>
   );
 };

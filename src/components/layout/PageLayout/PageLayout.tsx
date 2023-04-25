@@ -7,6 +7,10 @@ export const PageLayoutWrapper: React.FC<PageLayoutProps> = ({ children, classNa
   </Styled.PageLayout>
 );
 
+export const PageLayoutDivider: React.FC<{ className?: string }> = ({ className }) => (
+  <Styled.PageLayoutDivider className={className} />
+);
+
 export const PageLayoutSection: React.FC<PageLayoutProps> = ({ className, children, fullWidth, ...rest }) => (
   <Styled.PageLayoutSection $fullWidth={fullWidth} className={className} {...rest}>
     {children}
@@ -14,5 +18,6 @@ export const PageLayoutSection: React.FC<PageLayoutProps> = ({ className, childr
 );
 
 export const PageLayout = Object.assign(PageLayoutWrapper, {
+  Divider: PageLayoutDivider,
   Section: PageLayoutSection,
 });

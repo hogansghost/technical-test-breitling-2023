@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const KeyFeature = styled.div`
+export const KeyFeature = styled.li`
   text-align: center;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -13,6 +13,7 @@ export const Icon = styled.div`
   display: grid;
   padding: 16px;
   max-width: 100%;
+  height: 70px;
   width: 70px;
   grid-template-columns: minmax(0, 1fr);
   align-items: center;

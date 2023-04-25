@@ -8,6 +8,18 @@ fragment ProductFragment on Product {
   seoTitle
   seoDescription
 
+  pricing {
+    onSale
+    priceRange {
+      start {
+        gross {
+          amount
+          currency
+        }
+      }
+    }
+  }
+
   media {
     ...ProductMediaFragment
   }

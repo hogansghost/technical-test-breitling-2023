@@ -9,8 +9,40 @@ import { BreitlingLogo } from '@/components/logos/BreitlingLogo';
 
 import styled, { css } from 'styled-components';
 
+export const Navigation = styled.nav`
+  position: sticky;
+  top: 0;
+  padding-block: 16px;
+  background: white;
+  border-block-end: 1px solid #efefef;
+  z-index: 11;
+`;
+
+export const NavigationBody = styled.div`
+  ${({ theme }) => css`
+    display: grid;
+    row-gap: ${theme.spacing(1)};
+    grid-template-areas:
+      'logo actionNavigation'
+      'pageNavigation pageNavigation';
+    grid-template-columns: minmax(10px, 120px) 1fr;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: auto;
+    width: ${theme.dimensions.content.large};
+    max-width: 100%;
+
+    @media (min-width: 768px) {
+      grid-template-columns: 160px minmax(0, 1fr) min-content;
+      grid-template-areas: 'logo pageNavigation actionNavigation';
+    }
+  `}
+`;
+
 export const HomeLink = styled(Link)`
-  width: 120px;
+  padding-block: 16px;
+  padding-inline: 32px;
+  grid-area: logo;
 `;
 
 export const PageLink = styled(Link)`
@@ -19,32 +51,18 @@ export const PageLink = styled(Link)`
   text-transform: uppercase;
 `;
 
-export const Navigation = styled.nav`
-  padding-block: 16px;
-  padding-inline: 32px;
-  border-block-end: 1px solid #efefef;
-`;
-
-export const NavigationBody = styled.div`
-  ${({ theme }) => css`
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    margin: auto;
-    width: ${theme.dimensions.content.large};
-    max-width: 100%;
-  `}
-`;
-
 export const List = styled.ul`
   display: flex;
   align-items: center;
   gap: 16px;
   list-style: none;
+  padding-inline: 32px;
 `;
 
 export const PageListWrapper = styled.div`
   flex: 1 1 auto;
+  grid-area: pageNavigation;
+
   @media (max-width: 768px) {
     order: 3;
     overflow: auto;
@@ -54,6 +72,11 @@ export const PageListWrapper = styled.div`
 
 export const PageList = styled(List)`
   gap: 32px;
+`;
+
+export const ActionList = styled(List)`
+  justify-content: flex-end;
+  grid-area: actionNavigation;
 `;
 
 export const NavigationMain = () => (
@@ -89,7 +112,7 @@ export const NavigationMain = () => (
         </PageList>
       </PageListWrapper>
 
-      <List>
+      <ActionList>
         <li>
           <LinkIcon aria-label="Search" href="/watches">
             <SearchIcon />
@@ -115,7 +138,7 @@ export const NavigationMain = () => (
             <BasketIcon />
           </LinkIcon>
         </li>
-      </List>
+      </ActionList>
     </NavigationBody>
   </Navigation>
 );

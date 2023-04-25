@@ -15,7 +15,7 @@ export const NotificationBannerBody = styled.div`
     grid-template-columns: minmax(0, 1fr) min-content;
     align-items: center;
     margin: auto;
-    width: ${theme.dimensions.content.large};
+    width: ${theme.dimensions.content.medium};
     max-width: 100%;
   `}
 `;

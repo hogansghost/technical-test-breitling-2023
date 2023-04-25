@@ -1,3 +1,4 @@
+import { Footer } from '@/components/common/Footer/Footer';
 import { HeroCarousel } from '@/components/common/HeroCarousel/HeroCarousel';
 import { PageLayout } from '@/components/layout/PageLayout/PageLayout';
 import type { NextPage } from 'next';
@@ -25,6 +26,8 @@ const Home: NextPage = () => {
           </PageLayout.Section>
         </PageLayout>
       </main>
+
+      <Footer />
     </>
   );
 };

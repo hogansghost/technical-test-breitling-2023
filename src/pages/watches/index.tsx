@@ -1,4 +1,5 @@
 import { SearchInput } from '@/components/SearchInput/SearchInput';
+import { Footer } from '@/components/common/Footer/Footer';
 import { ProductListGrid } from '@/components/common/products/ProductListGrid/ProductListGrid';
 import { LoadingOverlay } from '@/components/core/LoadingOverlay/LoadingOverlay';
 import { FilterBar } from '@/components/layout/FilterBar/FilterBar';
@@ -6,10 +7,10 @@ import { PageLayout } from '@/components/layout/PageLayout/PageLayout';
 import { useGetProductsQuery } from '@/queries/getProducts/getProducts.generated';
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 
+// TODO: Make some hooks to abstract logic out of the component, make for easier reading, etc.
 export const Watches: NextPage = () => {
   const router = useRouter();
 
@@ -41,7 +42,8 @@ export const Watches: NextPage = () => {
   }, [fetchMore, data?.products?.pageInfo?.endCursor]);
 
   const handleSearchChange = async (value: string) => {
-    // TODO: create a util to spread filters so we don't lose other values.
+    // TODO: Create a util to spread filters so we don't lose other values.
+    // TODO: Fix logic here as well to... a) work and b) properly handle multiple filters at once, etc.
     await router.replace(
       {
         query: {
@@ -134,12 +136,10 @@ export const Watches: NextPage = () => {
               )}
             </LoadingOverlay>
           </PageLayout.Section>
-
-          <PageLayout.Section>
-            <Link href="/">Home</Link>
-          </PageLayout.Section>
         </PageLayout>
       </main>
+
+      <Footer />
     </>
   );
 };

@@ -2,9 +2,12 @@ import styled from 'styled-components';
 
 export const HeroDetails = styled.div`
   display: grid;
-  /* grid-auto-rows: min-content; */
   grid-template-rows: min-content minmax(40px, 1fr) 64px;
-  grid-template-columns: minmax(20px, 120px) minmax(40px, 1fr) minmax(20px, 120px) minmax(20px, 120px);
+  grid-template-columns: minmax(20px, 40px) minmax(40px, 1fr) minmax(20px, 160px) minmax(20px, 40px);
+
+  @media (min-width: 768px) {
+    grid-template-columns: minmax(20px, 120px) minmax(40px, 1fr) minmax(20px, 120px) minmax(20px, 60px);
+  }
 `;
 
 export const HeroDetailsImageWrapper = styled.div`
